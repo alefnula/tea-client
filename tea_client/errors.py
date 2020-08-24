@@ -1,6 +1,7 @@
 from typing import Optional
 
 from httpx import Response
+from pydantic import ValidationError as PydanticValidationError
 
 
 class TeaClientError(Exception):
@@ -16,6 +17,16 @@ class TeaClientError(Exception):
         return f"{self.class_name}({self.status_code}: {self.message})"
 
     __repr__ = __str__
+
+
+class ValidationError(TeaClientError):
+    def __init__(self, error: PydanticValidationError):
+        self.error = error
+        super().__init__(message="Request validation error.", status_code=400)
+
+    @property
+    def errors(self):
+        return self.error.errors()
 
 
 class HttpClientError(TeaClientError):

@@ -1,10 +1,9 @@
 from typing import Optional, Dict
 
 import httpx
-from pydantic import BaseModel
 
 from tea_client import errors
-
+from tea_client.models import TeaClientModel
 
 class HttpClient:
     """Generic requests handler.
@@ -50,7 +49,7 @@ class HttpClient:
         url: str,
         headers: Optional[Dict[str, str]] = None,
         params: Optional[Dict[str, str]] = None,
-        data: Optional[BaseModel] = None,
+        data: Optional[TeaClientModel] = None,
         timeout: Optional[float] = None,
     ):
         """Request method.
@@ -197,7 +196,7 @@ class HttpClient:
         url: str,
         headers: Optional[Dict[str, str]] = None,
         params: Optional[Dict[str, str]] = None,
-        data: Optional[BaseModel] = None,
+        data: Optional[TeaClientModel] = None,
         timeout: Optional[float] = None,
     ):
         """Perform patch request.
@@ -229,7 +228,7 @@ class HttpClient:
         url: str,
         headers: Optional[Dict[str, str]] = None,
         params: Optional[Dict[str, str]] = None,
-        data: Optional[BaseModel] = None,
+        data: Optional[TeaClientModel] = None,
         timeout: Optional[float] = None,
     ):
         """Perform post request.
