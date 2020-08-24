@@ -1,5 +1,15 @@
 # CHANGELOG
 
+
+## v0.0.4 (August 24, 2020)
+
+- Use TeaError as an error base class.
+- Use `tea.serde` for data serialization.
+
+
+---
+
+
 ## v0.0.3 (August 24, 2020)
 
 - Fix.

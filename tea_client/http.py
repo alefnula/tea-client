@@ -1,9 +1,11 @@
 from typing import Optional, Dict
 
 import httpx
+from tea import serde
 
 from tea_client import errors
 from tea_client.models import TeaClientModel
+
 
 class HttpClient:
     """Generic requests handler.
@@ -86,7 +88,11 @@ class HttpClient:
                         url=url,
                         headers=headers,
                         params=params,
-                        json=None if data is None else data.dict(),
+                        data=(
+                            None
+                            if data is None
+                            else serde.json_dumps(data.dict())
+                        ),
                         timeout=timeout,
                     )
                 elif method.lower() == "post":
@@ -94,7 +100,11 @@ class HttpClient:
                         url=url,
                         headers=headers,
                         params=params,
-                        json=None if data is None else data.dict(),
+                        data=(
+                            None
+                            if data is None
+                            else serde.json_dumps(data.dict())
+                        ),
                         timeout=timeout,
                     )
                 elif method.lower() == "delete":

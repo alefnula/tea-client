@@ -1,20 +1,18 @@
 from typing import Optional
 
+from tea import errors
 from httpx import Response
 from pydantic import ValidationError as PydanticValidationError
 
 
-class TeaClientError(Exception):
+class TeaClientError(errors.TeaError):
     def __init__(self, message: str, status_code: int = 500):
+        super().__init__(message=message)
         self.message = message
         self.status_code = status_code
 
-    @property
-    def class_name(self):
-        return self.__class__.__name__
-
     def __str__(self):
-        return f"{self.class_name}({self.status_code}: {self.message})"
+        return f"{self.__class__.__name__}({self.status_code}: {self.message})"
 
     __repr__ = __str__
 
@@ -66,8 +64,9 @@ class HttpRateLimitExceeded(HttpClientError):
 
     def __str__(self):
         return (
-            f"{self.name}(limit={self.limit}, remaining={self.remaining}, "
-            f"reset={self.reset}s, retry={self.retry}s)"
+            f"{self.__class__.__name__}(limit={self.limit}, "
+            f"remaining={self.remaining}, reset={self.reset}s, "
+            f"retry={self.retry}s)"
         )
 
     __repr__ = __str__
