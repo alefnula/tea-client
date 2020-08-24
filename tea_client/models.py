@@ -3,10 +3,15 @@ from typing import Optional
 
 from pydantic import BaseModel, validator
 
+
+class TeaClientModel(BaseModel):
+    pass
+
+
 # Auth
 
 
-class AuthRequest(BaseModel):
+class AuthRequest(TeaClientModel):
     username: str
     password: str
 
@@ -23,7 +28,7 @@ def color_validator(value):
     return value
 
 
-class ColoredModel(BaseModel):
+class ColoredModel(TeaClientModel):
     color: str
 
     @validator("color")
@@ -31,7 +36,7 @@ class ColoredModel(BaseModel):
         return color_validator(value)
 
 
-class ColoredUpdateModel(BaseModel):
+class ColoredUpdateModel(TeaClientModel):
     color: Optional[str] = None
 
     @validator("color")
