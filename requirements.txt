@@ -1,0 +1,2 @@
+httpx[http2]==0.14.1
+pydantic==1.6.1

@@ -1,0 +1,6 @@
+include *.md
+include LICENSE
+include AUTHORS
+include setup.py
+include requirements.txt
+

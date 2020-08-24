@@ -1,0 +1,19 @@
+# Run artifacts
+__pycache__/
+*.py[cod]
+
+# Notebooks
+*.ipynb
+.ipynb_checkpoints
+
+# Build artifacts
+tea_client.egg-info
+build/
+dist/
+
+# Test artifacts
+.coverage
+
+# IDE Configuration
+.idea
+.vscode
