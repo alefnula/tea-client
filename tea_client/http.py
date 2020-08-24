@@ -151,7 +151,7 @@ class HttpClient:
 
         if self.response.status_code == 400:
             try:
-                message = "\n".join(self.response.json()["errors"])
+                message = "\n".join(self.response.json()["error"])
             except Exception:
                 message = "Bad Request."
             raise errors.HttpClientError(message, response=self.response)
