@@ -11,9 +11,18 @@ class TeaClientModel(BaseModel):
 # Auth
 
 
+class Auth(TeaClientModel):
+    token_access: str
+    token_refresh: str
+
+
 class AuthRequest(TeaClientModel):
     username: str
     password: str
+
+
+class AuthRefreshRequest(TeaClientModel):
+    refresh: str
 
 
 # Colored

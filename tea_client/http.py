@@ -40,8 +40,6 @@ class HttpClient:
 
         # Setup headers
         self.headers = {"Content-Type": "application/json"}
-        if self.token.strip() != "":
-            self.headers["Authorization"] = f"JWT {self.token}"
 
         self.response = None
 
@@ -70,6 +68,11 @@ class HttpClient:
                 data before giving up.
         """
         headers = {**self.headers, **(headers or {})}
+
+        # Set authorization token
+        if self.token.strip() != "":
+            headers["Authorization"] = f"JWT {self.token}"
+
         timeout = timeout or self.timeout
 
         try:
