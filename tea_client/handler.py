@@ -1,13 +1,30 @@
+import logging
 import functools
 
-from tea_client.errors import PydanticValidationError, ValidationError
+from tea_client.errors import (
+    HttpClientError,
+    PydanticValidationError,
+    ValidationError,
+)
+
+
+logger = logging.getLogger(__name__)
 
 
 def handler(func):
     @functools.wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper(self, *args, **kwargs):
         try:
-            return func(*args, **kwargs)
+            return func(self, *args, **kwargs)
+        except HttpClientError as e:
+            if e.status_code == 401:
+                # Try to refresh the token and call the function again.
+                try:
+                    self.refresh()
+                    return func(self, *args, **kwargs)
+                except Exception as e:
+                    logger.warning("Failed to refresh token: %s", e)
+            raise
         except PydanticValidationError as e:
             raise ValidationError(error=e)
 

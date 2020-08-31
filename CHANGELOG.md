@@ -1,6 +1,16 @@
 # CHANGELOG
 
 
+## v0.0.5 (September 01, 2020)
+
+- Added `Client` class that knows how to construct the url based on the base
+  url and api version.
+- `Client` class handles authentication and token refresh.
+
+
+---
+
+
 ## v0.0.4 (August 24, 2020)
 
 - Use TeaError as an error base class.
