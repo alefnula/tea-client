@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v0.0.6 (September XX, 2020)
+
+- Error handling fix.
+
+
+---
+
 
 ## v0.0.5 (September 01, 2020)
 
