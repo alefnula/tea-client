@@ -1,9 +1,10 @@
 # CHANGELOG
 
-## v0.0.6 (September XX, 2020)
+
+## v0.0.6 (October 21, 2020)
 
 - Error handling fix.
-
+- Add support for different authorization methods.
 
 ---
 
