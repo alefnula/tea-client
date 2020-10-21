@@ -1,3 +1,4 @@
+import enum
 from typing import Optional, Dict
 
 import httpx
@@ -7,12 +8,19 @@ from tea_client import errors
 from tea_client.models import TeaClientModel
 
 
+class AuthorizationMethod(enum.Enum):
+    basic = "Basic"
+    token = "Token"
+    jwt = "JWT"
+
+
 class HttpClient:
     """Generic requests handler.
 
     Handles retries and HTTP errors.
     """
 
+    Authorization = AuthorizationMethod
     ERRORS = {
         401: "Unauthorized",
         403: "Forbidden!",
@@ -25,17 +33,23 @@ class HttpClient:
     }
 
     def __init__(
-        self, url, token="", timeout=10,
+        self,
+        url: str,
+        token: str = "",
+        authorization_method: AuthorizationMethod = AuthorizationMethod.jwt,
+        timeout: int = 10,
     ):
         """Initialize.
 
         Args:
             url (str): URL to the Traktor server.
             token (str): Traktor authentication token.
+            authorization_method (AuthorizationMethod): Authorization method.
             timeout (int): Request timeout time.
         """
         self.url = url
         self.token = token
+        self.authorization_method = authorization_method
         self.timeout = timeout
 
         # Setup headers
@@ -71,7 +85,9 @@ class HttpClient:
 
         # Set authorization token
         if self.token.strip() != "":
-            headers["Authorization"] = f"JWT {self.token}"
+            headers[
+                "Authorization"
+            ] = f"{self.authorization_method.value} {self.token}"
 
         timeout = timeout or self.timeout
 
@@ -164,7 +180,7 @@ class HttpClient:
 
         if self.response.status_code == 400:
             try:
-                message = "\n".join(self.response.json()["error"])
+                message = self.response.json()["error"]
             except Exception:
                 message = "Bad Request."
             raise errors.HttpClientError(message, response=self.response)

@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.0.6 (October 21, 2020)
+
+- Error handling fix.
+- Add support for different authorization methods.
+
+---
+
+
 ## v0.0.5 (September 01, 2020)
 
 - Added `Client` class that knows how to construct the url based on the base
