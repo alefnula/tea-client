@@ -19,11 +19,15 @@ def handler(func):
         except HttpClientError as e:
             if e.status_code == 401:
                 # Try to refresh the token and call the function again.
-                try:
-                    self.refresh()
-                    return func(self, *args, **kwargs)
-                except Exception as e:
-                    logger.warning("Failed to refresh token: %s", e)
+                if (
+                    self.http.authorization_method
+                    == self.http.Authorization.jwt
+                ):
+                    try:
+                        self.refresh()
+                        return func(self, *args, **kwargs)
+                    except Exception as e:
+                        logger.warning("Failed to refresh token: %s", e)
             raise
         except PydanticValidationError as e:
             raise ValidationError(error=e)
