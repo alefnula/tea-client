@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.0.7 (October XX 2020)
+
+- Only JWT token should have try to refresh itself.
+
 
 ## v0.0.6 (October 21, 2020)
 
